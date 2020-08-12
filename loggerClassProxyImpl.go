@@ -1,28 +1,30 @@
 package tim_utils_log
 
-type TimLoggerMicroservicesStruct struct {
-	NameServLogger string
-	PortServLogger string
-}
+var LogServer TimLoggerMicroservicesStruct
 
 func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
 	eLogTrans = TimLogTransactHeader{}
 	eException = ExceptionStruct{}
+	println("Start Transaction " + iTransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	return
 }
 
 func (lcp LoggerClassProxy) LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
+	println(iStepName + ":" + iContext)
 	return
 }
 
-func (lcp LoggerClassProxy) LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepName string, iStepResult string) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
+	println(iStepName + ":" + iStepResult)
 	return
 }
 
 func (lcp LoggerClassProxy) FinishLogTransaction(iLogTransHeader, iStatus string) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
+	println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+
 	return
 }
 

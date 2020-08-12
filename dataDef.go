@@ -1,5 +1,10 @@
 package tim_utils_log
 
+type TimLoggerMicroservicesStruct struct {
+	NameLogServer string
+	PortLogServer string
+}
+
 type ExceptionStruct struct {
 	Occured bool
 	ErrTxt  string
@@ -34,9 +39,9 @@ const (
 )
 
 type TimExecLogging interface {
-	StartLogTransaction(iApp, iTransName string) (eLogTrans TimLogTransactHeader, eException ExceptionStruct)
-	LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepResult string) (eException ExceptionStruct)
+	StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct)
 	LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string, iResult string) (eException ExceptionStruct)
+	LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepResult string) (eException ExceptionStruct)
 	FinishLogTransaction(iLogTransHeader TimLogTransactHeader, iStatus string) (eException ExceptionStruct)
 }
 
