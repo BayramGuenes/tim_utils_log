@@ -2,7 +2,7 @@ package tim_utils_log
 
 var LogServer TimLoggerMicroservicesStruct
 
-func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
+func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
 	eLogTrans = TimLogTransactHeader{}
 	eException = ExceptionStruct{}
 	println("Start Transaction " + iTransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
