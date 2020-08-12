@@ -36,11 +36,9 @@ const (
 type TimExecLogging interface {
 	StartLogTransaction(iApp, iTransName string) (eLogTrans TimLogTransactHeader, eException ExceptionStruct)
 	LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepResult string) (eException ExceptionStruct)
-	LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string) (eException ExceptionStruct)
-	FinishLogTransaction(iLogTransHeader, iStatus string) (eException ExceptionStruct)
+	LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string, iResult string) (eException ExceptionStruct)
+	FinishLogTransaction(iLogTransHeader TimLogTransactHeader, iStatus string) (eException ExceptionStruct)
 }
 
 type LoggerClassProxy struct {
 }
-
-var Logger LoggerClassProxy
