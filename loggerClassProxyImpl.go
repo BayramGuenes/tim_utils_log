@@ -4,12 +4,10 @@ import timHTTP "github.com/BayramGuenes/tim_utils_http"
 
 var LogServer TimLoggerMicroservicesStruct
 
-func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
-	eLogTrans = TimLogTransactHeader{}
-	eException = ExceptionStruct{}
-	LogServer = iLogServer
+func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
+	eOutput = OutputParamStartTransact{}
 
-	println("Start Transaction " + iTransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 
 	lData := []byte{}
 	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartTransaction", lData)
@@ -19,19 +17,19 @@ func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogSer
 	return
 }
 
-func (lcp LoggerClassProxy) LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println(iStepName + ":" + iContext)
+	println(iInput.StepName + ":" + iInput.Context)
 	return
 }
 
-func (lcp LoggerClassProxy) LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepName string, iStepResult string) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println(iStepName + ":" + iStepResult)
+	println(iInput.StepName + ":" + iInput.StepResult)
 	return
 }
 
-func (lcp LoggerClassProxy) FinishLogTransaction(iLogTransHeader TimLogTransactHeader, iStatus string) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 

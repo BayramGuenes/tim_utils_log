@@ -56,6 +56,7 @@ type InputParamLogStep struct {
 
 type InputParamLogStepResult struct {
 	LogTransHeader TimLogTransactHeader
+	StepName       string
 	StepResult     string
 }
 
