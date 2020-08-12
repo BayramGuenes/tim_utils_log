@@ -1,6 +1,10 @@
 package tim_utils_log
 
-import timHTTP "github.com/BayramGuenes/tim_utils_http"
+import (
+	"encoding/json"
+
+	timHTTP "github.com/BayramGuenes/tim_utils_http"
+)
 
 var LogServer TimLoggerMicroservicesStruct
 
@@ -9,7 +13,12 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 
 	println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 
-	lData := []byte{}
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = err.Error()
+		return
+	}
 	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartTransaction", lData)
 	if lExcep.Occured {
 
@@ -20,19 +29,48 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println(iInput.StepName + ":" + iInput.Context)
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = err.Error()
+		return
+	}
+	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogTransactionStep", lData)
+	if lExcep.Occured {
+
+	}
 	return
 }
 
 func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println(iInput.StepName + ":" + iInput.StepResult)
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = err.Error()
+		return
+	}
+	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogTransactionStepResult", lData)
+	if lExcep.Occured {
+
+	}
 	return
 }
 
 func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = err.Error()
+		return
+	}
+	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/FinishLogTransaction", lData)
+	if lExcep.Occured {
 
+	}
 	return
 }
 
