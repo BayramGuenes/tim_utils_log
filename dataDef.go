@@ -47,3 +47,4 @@ type TimExecLogging interface {
 
 type LoggerClassProxy struct {
 }
+type LoggerServerClass struct{}
