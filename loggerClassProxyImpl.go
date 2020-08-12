@@ -5,6 +5,8 @@ var LogServer TimLoggerMicroservicesStruct
 func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
 	eLogTrans = TimLogTransactHeader{}
 	eException = ExceptionStruct{}
+	LogServer = iLogServer
+
 	println("Start Transaction " + iTransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	return
 }
@@ -21,7 +23,7 @@ func (lcp LoggerClassProxy) LogTransStepResult(iLogTransHeader TimLogTransactHea
 	return
 }
 
-func (lcp LoggerClassProxy) FinishLogTransaction(iLogTransHeader, iStatus string) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) FinishLogTransaction(iLogTransHeader TimLogTransactHeader, iStatus string) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 
