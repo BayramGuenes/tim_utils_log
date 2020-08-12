@@ -1,5 +1,7 @@
 package tim_utils_log
 
+import timHTTP "github.com/BayramGuenes/tim_utils_http"
+
 var LogServer TimLoggerMicroservicesStruct
 
 func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct) {
@@ -8,6 +10,12 @@ func (lcp LoggerClassProxy) StartLogTransaction(iApp, iTransName string, iLogSer
 	LogServer = iLogServer
 
 	println("Start Transaction " + iTransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+
+	lData := []byte{}
+	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartTransaction", lData)
+	if lExcep.Occured {
+
+	}
 	return
 }
 

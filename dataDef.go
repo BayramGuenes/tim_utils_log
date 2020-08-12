@@ -38,11 +38,37 @@ const (
 	CoTransStatusFinishedFailed = "failed"
 )
 
+type InputParamStartTransact struct {
+	App                 string
+	TransName           string
+	LogServerServiceAdr TimLoggerMicroservicesStruct
+}
+type OutputParamStartTransact struct {
+	LogTrans  TimLogTransactHeader
+	Exception ExceptionStruct
+}
+
+type InputParamLogStep struct {
+	LogTransHeader TimLogTransactHeader
+	StepName       string
+	Context        string
+}
+
+type InputParamLogStepResult struct {
+	LogTransHeader TimLogTransactHeader
+	StepResult     string
+}
+
+type InputParamFinishTransact struct {
+	LogTransHeader TimLogTransactHeader
+	Status         string
+}
+
 type TimExecLogging interface {
-	StartLogTransaction(iApp, iTransName string, iLogServer TimLoggerMicroservicesStruct) (eLogTrans TimLogTransactHeader, eException ExceptionStruct)
-	LogTransStep(iLogTransHeader TimLogTransactHeader, iStepName string, iContext string, iResult string) (eException ExceptionStruct)
-	LogTransStepResult(iLogTransHeader TimLogTransactHeader, iStepResult string) (eException ExceptionStruct)
-	FinishLogTransaction(iLogTransHeader TimLogTransactHeader, iStatus string) (eException ExceptionStruct)
+	StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact)
+	LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct)
+	LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct)
+	FinishLogTransaction(iInput InputParamFinishTransact) (eException ExceptionStruct)
 }
 
 type LoggerClassProxy struct {
