@@ -10,7 +10,8 @@ var LogServer TimLoggerMicroservicesStruct
 
 func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
 	eOutput = OutputParamStartTransact{}
-
+	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
+	LogServer.PortLogServer = iInput.LogServerServiceAdr.PortLogServer
 	println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 
 	lData, err := json.Marshal(iInput)
@@ -19,6 +20,7 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 		eOutput.Exception.ErrTxt = err.Error()
 		return
 	}
+	println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
 	_, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartTransaction", lData)
 	if lExcep.Occured {
 
