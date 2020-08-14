@@ -10,11 +10,14 @@ type ExceptionStruct struct {
 	ErrTxt  string
 }
 
-type TimLogTransactHeader struct {
-	TransKey  string
+type TimLogTransactPath struct {
 	AppName   string
 	TransName string
 	SubDomain string
+}
+type TimLogTransactHeader struct {
+	TransKey string
+	TimLogTransactPath
 }
 type TimLogTransactItem struct {
 	LogStep       string
@@ -40,9 +43,7 @@ const (
 )
 
 type InputParamStartTransact struct {
-	App                 string
-	TransName           string
-	SubDomain           string
+	TimLogTransactPath
 	LogServerServiceAdr TimLoggerMicroservicesStruct
 }
 type OutputParamStartTransact struct {
