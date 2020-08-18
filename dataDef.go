@@ -54,17 +54,20 @@ type OutputParamStartTransact struct {
 type InputParamLogStep struct {
 	LogTransHeader TimLogTransactHeader
 	StepName       string
+	StepNum        int
 	Context        string
 }
 
 type InputParamLogStepResult struct {
 	LogTransHeader TimLogTransactHeader
 	StepName       string
+	StepNum        int
 	StepResult     string
 }
 
 type InputParamFinishTransact struct {
 	LogTransHeader TimLogTransactHeader
+	StepNum        int
 	Status         string
 }
 
