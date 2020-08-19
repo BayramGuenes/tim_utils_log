@@ -14,13 +14,13 @@ type TimLogTransactPath struct {
 	AppName   string
 	TransName string
 	SubDomain string
-	utime     string
 }
 type TimLogTransactHeader struct {
 	TransKey  string
 	AppName   string
 	TransName string
 	SubDomain string
+	Utime     string
 }
 type TimLogTransactItem struct {
 	LogStep       string
