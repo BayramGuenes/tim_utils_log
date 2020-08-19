@@ -16,8 +16,10 @@ type TimLogTransactPath struct {
 	SubDomain string
 }
 type TimLogTransactHeader struct {
-	TransKey string
-	TimLogTransactPath
+	TransKey  string
+	AppName   string
+	TransName string
+	SubDomain string
 }
 type TimLogTransactItem struct {
 	LogStep       string
