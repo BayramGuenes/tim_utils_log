@@ -137,8 +137,8 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 	ulog.CurrentStepnum++
 	lInputFinishTr.StepNum = ulog.CurrentStepnum
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
-
-	if ulog.DoTrace {
+	timLogger.FinishLogTransaction(lInputFinishTr)
+	/*if ulog.DoTrace {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
 	} else {
 		bufferlogger := NewLogger(ulog.TransHeader.AppName, ulog.TransHeader.SubDomain, ulog.NameTimLogServer, ulog.PortTimLogServer, ulog.TransHeader.UName, true)
@@ -163,6 +163,8 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 			eException = bufferlogger.LogEndFailed()
 		}
 	}
+	*/
+	ulog = &UtilsLog{}
 	return eException
 
 }
