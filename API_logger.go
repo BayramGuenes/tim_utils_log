@@ -14,15 +14,14 @@ type UtilsLog struct {
 	TransHeader      TimLogTransactHeader
 	CurrentStepnum   int
 	LogItemTab       []BufferedLogItem
-	LogOnlyErr       bool
+	DoTrace          bool
 }
 
-func NewLogger(iAppName, iSubdomain, iNameTimLogServer, iPortTimLogServer, iUName string, iOnlyErr bool) (eLog UtilsLog) {
+func NewLogger(iAppName, iSubdomain, iNameTimLogServer, iPortTimLogServer, iUName string, iDoTrace bool) (eLog UtilsLog) {
 	eLog.TransHeader.AppName = iAppName
 	eLog.TransHeader.SubDomain = iSubdomain
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
-	eLog.LogOnlyErr = iOnlyErr
 	eLog.TransHeader.UName = iUName
 	return
 }
@@ -41,7 +40,7 @@ func (ulog *UtilsLog) LogStart(iTransname string) (eException ExceptionStruct) {
 	lInputStartTr.UName = ulog.TransHeader.UName
 
 	ulog.CurrentStepnum = 1
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		lOutput := timLogger.StartLogTransaction(lInputStartTr)
 		ulog.TransHeader = lOutput.LogTrans
 		eException = lOutput.Exception
@@ -57,7 +56,7 @@ func (ulog *UtilsLog) LogStep(iStepName string, iContext string) (eException Exc
 	lInputLogStep.Context = iContext
 	ulog.CurrentStepnum++
 	lInputLogStep.StepNum = ulog.CurrentStepnum
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		eException = timLogger.LogTransStep(lInputLogStep)
 	} else {
 		logItemCache := BufferedLogItem{
@@ -80,7 +79,7 @@ func (ulog *UtilsLog) LogStepExecOK(iStepName string, iContext string) (eExcepti
 	ulog.CurrentStepnum++
 	lInputLogStepRes.StepNum = ulog.CurrentStepnum
 	lInputLogStepRes.StepResult = CoResultTypeOk
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	} else {
 		logItemCache := BufferedLogItem{
@@ -103,7 +102,7 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	ulog.CurrentStepnum++
 	lInputLogStepRes.StepNum = ulog.CurrentStepnum
 	lInputLogStepRes.StepResult = CoResultTypeErr
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	} else {
 		logItemCache := BufferedLogItem{
@@ -125,31 +124,10 @@ func (ulog *UtilsLog) LogEndOK() (eException ExceptionStruct) {
 	ulog.CurrentStepnum++
 	lInputFinishTr.StepNum = ulog.CurrentStepnum
 	lInputFinishTr.Status = CoTransStatusFinishedOk
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
-	} else {
-		bufferlogger := NewLogger(ulog.TransHeader.AppName, ulog.TransHeader.SubDomain, ulog.NameTimLogServer, ulog.PortTimLogServer, ulog.TransHeader.UName, false)
-		eException := bufferlogger.LogStart(ulog.TransHeader.TransName)
-		for i := 0; i < len(ulog.LogItemTab); i++ {
-			if !eException.Occured {
-				logItem := ulog.LogItemTab[i]
-				switch logItem.ItemType {
-				case "step":
-					eException = bufferlogger.LogStep(logItem.StepName, logItem.StepContext)
-				case "result":
-					switch logItem.StepResult {
-					case CoResultTypeOk:
-						eException = bufferlogger.LogStepExecOK(logItem.StepName, logItem.StepContext)
-					case CoResultTypeErr:
-						eException = bufferlogger.LogStepExecErr(logItem.StepName, logItem.StepContext)
-					}
-				}
-			}
-		}
-		if !eException.Occured {
-			eException = bufferlogger.LogEndOK()
-		}
 	}
+	ulog = &UtilsLog{}
 	return eException
 }
 func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
@@ -160,10 +138,10 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 	lInputFinishTr.StepNum = ulog.CurrentStepnum
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
 
-	if !ulog.LogOnlyErr {
+	if ulog.DoTrace {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
 	} else {
-		bufferlogger := NewLogger(ulog.TransHeader.AppName, ulog.TransHeader.SubDomain, ulog.NameTimLogServer, ulog.PortTimLogServer, ulog.TransHeader.UName, false)
+		bufferlogger := NewLogger(ulog.TransHeader.AppName, ulog.TransHeader.SubDomain, ulog.NameTimLogServer, ulog.PortTimLogServer, ulog.TransHeader.UName, true)
 		eException := bufferlogger.LogStart(ulog.TransHeader.TransName)
 		for i := 0; i < len(ulog.LogItemTab); i++ {
 			if !eException.Occured {

@@ -50,6 +50,10 @@ type InputParamStartTransact struct {
 	TimLogTransactPath
 	LogServerServiceAdr TimLoggerMicroservicesStruct
 }
+type OutputParamDoTrace struct {
+	DoTrace   bool
+	Exception ExceptionStruct
+}
 type OutputParamStartTransact struct {
 	LogTrans  TimLogTransactHeader
 	Exception ExceptionStruct
@@ -77,6 +81,7 @@ type InputParamFinishTransact struct {
 }
 
 type TimExecLogging interface {
+	CheckDoTraceTransaction(iInput InputParamStartTransact) (eOutput OutputParamDoTrace)
 	StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact)
 	LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct)
 	LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct)
