@@ -20,7 +20,8 @@ type TimLogTransactHeader struct {
 	AppName   string
 	TransName string
 	SubDomain string
-	Utime     string
+	UName     string
+	UTime     string
 }
 type TimLogTransactItem struct {
 	LogStep       string
@@ -46,6 +47,7 @@ const (
 )
 
 type InputParamStartTransact struct {
+	UName string
 	TimLogTransactPath
 	LogServerServiceAdr TimLoggerMicroservicesStruct
 }
