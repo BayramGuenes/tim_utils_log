@@ -1,9 +1,5 @@
 package tim_utils_log
 
-import (
-	"strconv"
-)
-
 var timLogger LoggerClassProxy
 
 type BufferedLogItem = struct {
@@ -45,7 +41,7 @@ func (ulog *UtilsLog) LogStart(iTransname string) (eException ExceptionStruct) {
 	lInputStartTr.UName = ulog.TransHeader.UName
 
 	ulog.CurrentStepnum = 1
-	println("LogStart-DoTrace:" + strconv.FormatBool(ulog.DoTrace))
+	//println("LogStart-DoTrace:" + strconv.FormatBool(ulog.DoTrace))
 	if ulog.DoTrace {
 		lOutput := timLogger.StartLogTransaction(lInputStartTr)
 		ulog.TransHeader = lOutput.LogTrans
