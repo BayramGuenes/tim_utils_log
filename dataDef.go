@@ -66,6 +66,7 @@ type InputParamLogStepResult struct {
 	StepName       string
 	StepNum        int
 	StepResult     string
+	Context        string
 }
 
 type InputParamFinishTransact struct {
