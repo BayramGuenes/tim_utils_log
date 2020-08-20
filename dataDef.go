@@ -41,9 +41,8 @@ const (
 	CoResultTypeFatal = "Fatal"
 )
 const (
-	CoTransStatusRunning        = "running"
-	CoTransStatusFinishedOk     = "succeeded"
-	CoTransStatusFinishedFailed = "failed"
+	CoTransStatusFinishedOk     = "OK"
+	CoTransStatusFinishedFailed = "FAILED"
 )
 
 type InputParamStartTransact struct {
