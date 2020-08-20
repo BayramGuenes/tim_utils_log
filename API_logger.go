@@ -1,5 +1,9 @@
 package tim_utils_log
 
+import (
+	"strconv"
+)
+
 var timLogger LoggerClassProxy
 
 type BufferedLogItem = struct {
@@ -23,6 +27,7 @@ func NewLogger(iAppName, iSubdomain, iNameTimLogServer, iPortTimLogServer, iUNam
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
 	eLog.TransHeader.UName = iUName
+	eLog.DoTrace = iDoTrace
 	return
 }
 
@@ -40,6 +45,7 @@ func (ulog *UtilsLog) LogStart(iTransname string) (eException ExceptionStruct) {
 	lInputStartTr.UName = ulog.TransHeader.UName
 
 	ulog.CurrentStepnum = 1
+	println("LogStart-DoTrace:" + strconv.FormatBool(ulog.DoTrace))
 	if ulog.DoTrace {
 		lOutput := timLogger.StartLogTransaction(lInputStartTr)
 		ulog.TransHeader = lOutput.LogTrans
@@ -137,7 +143,7 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 	ulog.CurrentStepnum++
 	lInputFinishTr.StepNum = ulog.CurrentStepnum
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
-	timLogger.FinishLogTransaction(lInputFinishTr)
+	//timLogger.FinishLogTransaction(lInputFinishTr)
 	/*if ulog.DoTrace {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
 	} else {
@@ -164,7 +170,7 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 		}
 	}
 	*/
-	ulog = &UtilsLog{}
+	//ulog = &UtilsLog{}
 	return eException
 
 }
