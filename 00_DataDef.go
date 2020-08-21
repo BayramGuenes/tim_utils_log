@@ -51,9 +51,18 @@ type InputParamStartTransact struct {
 	LogServerServiceAdr TimLoggerMicroservicesStruct
 	ErrCase             bool
 }
+type InputParamCheckDisableLogMedia struct {
+	LogServerServiceAdr TimLoggerMicroservicesStruct
+	ErrCase             bool
+}
 type OutputParamDoTrace struct {
 	DoTrace   bool
 	Exception ExceptionStruct
+}
+type OutputParamDisableLogMedia struct {
+	DisableFilesys bool
+	DisableDB      bool
+	Exception      ExceptionStruct
 }
 type OutputParamStartTransact struct {
 	LogTrans  TimLogTransactHeader

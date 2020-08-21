@@ -34,6 +34,32 @@ func (lcp LoggerClassProxy) CheckDoTraceTransaction(iInput InputParamStartTransa
 	}
 	return
 }
+func (lcp LoggerClassProxy) CheckDisableLogMedia(iInput InputParamCheckDisableLogMedia) (eOutput OutputParamDisableLogMedia) {
+	eOutput = OutputParamDisableLogMedia{}
+	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
+	LogServer.PortLogServer = iInput.LogServerServiceAdr.PortLogServer
+
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
+		return
+	}
+	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/CheckDisableLogMedia", lData)
+	if lExcep.Occured {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "CheckDisableLogMedia SendPostMessage to tim_serv_logger:" + err.Error()
+		return
+	}
+	err = json.Unmarshal(lResultArrByte, &eOutput)
+	if err != nil {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "json.Unmarshall.lResultArrByte:" + err.Error()
+		return
+	}
+	return
+}
 
 func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
 	eOutput = OutputParamStartTransact{}
