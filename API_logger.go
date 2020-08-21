@@ -15,6 +15,7 @@ type UtilsLog struct {
 	CurrentStepnum   int
 	LogItemTab       []BufferedLogItem
 	DoTrace          bool
+	errCase          bool
 }
 
 func NewLogger(iAppName, iSubdomain, iNameTimLogServer, iPortTimLogServer, iUName string, iDoTrace bool) (eLog UtilsLog) {
@@ -144,6 +145,9 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
 	} else {
 		bufferlogger := NewLogger(ulog.TransHeader.AppName, ulog.TransHeader.SubDomain, ulog.NameTimLogServer, ulog.PortTimLogServer, ulog.TransHeader.UName, true)
+		if ulog.errCase {
+			bufferlogger.setErrCase()
+		}
 		eException := bufferlogger.LogStart(ulog.TransHeader.TransName)
 		for i := 0; i < len(ulog.LogItemTab); i++ {
 			if !eException.Occured {
@@ -169,4 +173,8 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 	ulog = &UtilsLog{}
 	return eException
 
+}
+
+func (ulog *UtilsLog) setErrCase() {
+	ulog.errCase = true
 }

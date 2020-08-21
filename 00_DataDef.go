@@ -49,6 +49,7 @@ type InputParamStartTransact struct {
 	UName string
 	TimLogTransactPath
 	LogServerServiceAdr TimLoggerMicroservicesStruct
+	ErrCase             bool
 }
 type OutputParamDoTrace struct {
 	DoTrace   bool
@@ -64,6 +65,7 @@ type InputParamLogStep struct {
 	StepName       string
 	StepNum        int
 	Context        string
+	ErrCase        bool
 }
 
 type InputParamLogStepResult struct {
@@ -72,12 +74,14 @@ type InputParamLogStepResult struct {
 	StepNum        int
 	StepResult     string
 	Context        string
+	ErrCase        bool
 }
 
 type InputParamFinishTransact struct {
 	LogTransHeader TimLogTransactHeader
 	StepNum        int
 	Status         string
+	ErrCase        bool
 }
 
 type TimExecLogging interface {
