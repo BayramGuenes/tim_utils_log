@@ -97,7 +97,7 @@ func (ulog *UtilsLog) LogStepExecOK(iStepName string, iContext string) (eExcepti
 }
 func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-
+	ulog.setErrCase()
 	lInputLogStepRes := InputParamLogStepResult{}
 	lInputLogStepRes.LogTransHeader = ulog.TransHeader
 	lInputLogStepRes.StepName = iStepName
@@ -140,6 +140,7 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 	ulog.CurrentStepnum++
 	lInputFinishTr.StepNum = ulog.CurrentStepnum
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
+	ulog.setErrCase()
 
 	if ulog.DoTrace {
 		eException = timLogger.FinishLogTransaction(lInputFinishTr)
