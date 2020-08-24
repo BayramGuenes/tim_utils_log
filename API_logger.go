@@ -11,7 +11,7 @@ type UtilsLog struct {
 	ErrCase          bool
 }
 
-func StartTransaction(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
+func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
 
 	lInput := InputParamStartTransact{}
 	lInput.TransAppName = iAppName
@@ -33,7 +33,7 @@ func StartTransaction(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer
 	return
 }
 
-func StartService(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
+func NewLoggerSvc(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
 	lInput := InputParamStartTransact{}
 	lInput.TransKey = iTransHeader.TransKey
 	lInput.TransAppName = iAppName
@@ -111,7 +111,7 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	return eException
 }
 
-func (ulog *UtilsLog) LogEndTransactOK() (eException ExceptionStruct) {
+func (ulog *UtilsLog) CloseLoggerTrStatOK() (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 
 	lInputFinishTr := InputParamFinishTransact{}
@@ -121,26 +121,35 @@ func (ulog *UtilsLog) LogEndTransactOK() (eException ExceptionStruct) {
 	ulog = &UtilsLog{}
 	return eException
 }
-func (ulog *UtilsLog) LogEndServiceOK() (eException ExceptionStruct) {
+func (ulog *UtilsLog) CloseLoggerSvcStatOK() (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 
 	lInputFinishTr := InputParamFinishTransact{}
 	lInputFinishTr.LogTransHeader = ulog.TransHeader
 	lInputFinishTr.Status = CoTransStatusFinishedOk
-	eException = timLogger.FinishLogTransaction(lInputFinishTr)
+	eException = timLogger.FinishLogService(lInputFinishTr)
 	ulog = &UtilsLog{}
 	return eException
 }
-func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
+func (ulog *UtilsLog) CloseLoggerTrStatFailed() (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	lInputFinishTr := InputParamFinishTransact{}
 	lInputFinishTr.LogTransHeader = ulog.TransHeader
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
 	lInputFinishTr.ErrCase = true
 	eException = timLogger.FinishLogTransaction(lInputFinishTr)
-	if !eException.Occured {
-		eException = ulog.LogEndFailedInFileSys()
-	}
+	eException = ulog.LogEndFailedInFileSys()
+	ulog = &UtilsLog{}
+	return eException
+}
+func (ulog *UtilsLog) CloseLoggerSvcStatFailed() (eException ExceptionStruct) {
+	eException = ExceptionStruct{}
+	lInputFinishTr := InputParamFinishTransact{}
+	lInputFinishTr.LogTransHeader = ulog.TransHeader
+	lInputFinishTr.Status = CoTransStatusFinishedFailed
+	lInputFinishTr.ErrCase = true
+	eException = timLogger.FinishLogService(lInputFinishTr)
+	eException = ulog.LogEndFailedInFileSys()
 	ulog = &UtilsLog{}
 	return eException
 
@@ -149,6 +158,8 @@ func (ulog *UtilsLog) LogEndFailed() (eException ExceptionStruct) {
 func (ulog *UtilsLog) LogEndFailedInFileSys() (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	lInpParamFailedToFilesys := InputParamFailedToFilesys{}
+	lInpParamFailedToFilesys.LogTransHeader = ulog.TransHeader
+	lInpParamFailedToFilesys.Items = ulog.LogItemTab
 	eException = timLogger.LogEndFailedInFileSys(lInpParamFailedToFilesys)
 
 	return eException
