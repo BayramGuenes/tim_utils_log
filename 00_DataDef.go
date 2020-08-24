@@ -83,6 +83,13 @@ type InputParamFinishTransact struct {
 	Status         string
 	ErrCase        bool
 }
+type InputParamFinishService struct {
+	LogTransHeader TimLogTransactHeader
+	AppLogging     string
+	ServiceName    string
+	Status         string
+	ErrCase        bool
+}
 
 type BufferedLogItem = struct {
 	ItemType    string //"step","result"
