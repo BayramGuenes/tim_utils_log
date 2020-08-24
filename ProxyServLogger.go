@@ -78,7 +78,7 @@ func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException E
 		eException.ErrTxt = err.Error()
 		return
 	}
-	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogTransactionStep", lData)
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogServiceStep", lData)
 	if lExcep.Occured {
 		eException.Occured = true
 		eException.ErrTxt = "LogTransStep SendPostMessage to tim_serv_logger:" + err.Error()
@@ -102,7 +102,7 @@ func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (
 		eException.ErrTxt = err.Error()
 		return
 	}
-	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogTransactionStepResult", lData)
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogServiceStepResult", lData)
 	if lExcep.Occured {
 		eException.Occured = true
 		eException.ErrTxt = "LogTransStepResult SendPostMessage to tim_serv_logger:" + err.Error()
