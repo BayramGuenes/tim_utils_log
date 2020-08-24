@@ -1,5 +1,6 @@
 package tim_utils_log
 
+/*
 func CheckDisableLogMedia(iNameTimLogServer, iPortTimLogServer string, iErrCase bool) (eOutput OutputParamDisableLogMedia) {
 	eOutput = OutputParamDisableLogMedia{}
 	lInput := InputParamCheckDisableLogMedia{}
@@ -9,3 +10,4 @@ func CheckDisableLogMedia(iNameTimLogServer, iPortTimLogServer string, iErrCase 
 	eOutput = timLogger.CheckDisableLogMedia(lInput)
 	return
 }
+*/

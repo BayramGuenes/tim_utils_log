@@ -10,18 +10,16 @@ type ExceptionStruct struct {
 	ErrTxt  string
 }
 
-type TimLogTransactPath struct {
-	AppName   string
-	TransName string
-	SubDomain string
-}
+/*type TimLogTransactPath struct {
+	TransAppname string
+	TransName    string
+}*/
 type TimLogTransactHeader struct {
-	TransKey  string
-	AppName   string
-	TransName string
-	SubDomain string
-	UName     string
-	UTime     string
+	TransKey      string
+	TransName     string
+	TransAppName  string
+	ClientAppName string
+	UName         string
 }
 type TimLogTransactItem struct {
 	LogStep       string
@@ -46,10 +44,13 @@ const (
 )
 
 type InputParamStartTransact struct {
-	UName string
-	TimLogTransactPath
+	TransKey            string
+	TransName           string
+	ServiceName         string
+	TransAppName        string
+	ClientAppName       string
+	UName               string
 	LogServerServiceAdr TimLoggerMicroservicesStruct
-	ErrCase             bool
 }
 type InputParamCheckDisableLogMedia struct {
 	LogServerServiceAdr TimLoggerMicroservicesStruct
@@ -91,6 +92,17 @@ type InputParamFinishTransact struct {
 	StepNum        int
 	Status         string
 	ErrCase        bool
+}
+
+type BufferedLogItem = struct {
+	ItemType    string //"step","result"
+	StepName    string
+	StepContext string
+	StepResult  string
+}
+type InputParamFailedToFilesys struct {
+	LogTransHeader TimLogTransactHeader
+	Items          []BufferedLogItem
 }
 
 type TimExecLogging interface {

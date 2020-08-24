@@ -63,8 +63,8 @@ func (lcp LoggerClassProxy) CheckDisableLogMedia(iInput InputParamCheckDisableLo
 
 func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
 	eOutput = OutputParamStartTransact{}
-	eOutput.LogTrans.AppName = iInput.AppName
-	eOutput.LogTrans.SubDomain = iInput.SubDomain
+	eOutput.LogTrans.TransAppName = iInput.TransAppName
+	eOutput.LogTrans.ClientAppName = iInput.ClientAppName
 	eOutput.LogTrans.TransName = iInput.TransName
 	eOutput.LogTrans.UName = iInput.UName
 	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
@@ -81,6 +81,36 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 	if lExcep.Occured {
 		eOutput.Exception.Occured = true
 		eOutput.Exception.ErrTxt = "StartTransaction SendPostMessage to tim_serv_logger:" + err.Error()
+		return
+	}
+	err = json.Unmarshal(lResultArrByte, &eOutput)
+	if err != nil {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "json.Unmarshall.lResultArrByte:" + err.Error()
+		return
+	}
+	return
+}
+func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
+	eOutput = OutputParamStartTransact{}
+	eOutput.LogTrans.TransAppName = iInput.TransAppName
+	eOutput.LogTrans.ClientAppName = iInput.ClientAppName
+	eOutput.LogTrans.TransName = iInput.TransName
+	eOutput.LogTrans.UName = iInput.UName
+	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
+	LogServer.PortLogServer = iInput.LogServerServiceAdr.PortLogServer
+	println("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
+		return
+	}
+	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartService", lData)
+	if lExcep.Occured {
+		eOutput.Exception.Occured = true
+		eOutput.Exception.ErrTxt = "StartService SendPostMessage to tim_serv_logger:" + err.Error()
 		return
 	}
 	err = json.Unmarshal(lResultArrByte, &eOutput)
@@ -153,6 +183,28 @@ func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact
 	if lExcep.Occured {
 		eException.Occured = true
 		eException.ErrTxt = "FinishLogTransaction SendPostMessage to tim_serv_logger:" + err.Error()
+		return
+	}
+	err = json.Unmarshal(lResultArrByte, &eException)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = "json.Unmarshall.lResultArrByte:" + err.Error()
+		return
+	}
+	return
+}
+
+func (lcp LoggerClassProxy) LogEndFailedInFileSys(iInput InputParamFailedToFilesys) (eException ExceptionStruct) {
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = err.Error()
+		return
+	}
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/LogFailedIntoFilesys", lData)
+	if lExcep.Occured {
+		eException.Occured = true
+		eException.ErrTxt = "LogEndFailedInFileSys SendPostMessage to tim_serv_logger:" + err.Error()
 		return
 	}
 	err = json.Unmarshal(lResultArrByte, &eException)

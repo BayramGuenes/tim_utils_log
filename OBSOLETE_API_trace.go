@@ -1,5 +1,6 @@
 package tim_utils_log
 
+/*
 func DoTraceTransaction(iAppName, iSubdomain, iTransName, iNameTimLogServer, iPortTimLogServer, iUName string) (eOutput OutputParamDoTrace) {
 	eOutput = OutputParamDoTrace{}
 	lInput := InputParamStartTransact{}
@@ -12,3 +13,4 @@ func DoTraceTransaction(iAppName, iSubdomain, iTransName, iNameTimLogServer, iPo
 	eOutput = timLogger.CheckDoTraceTransaction(lInput)
 	return
 }
+*/
