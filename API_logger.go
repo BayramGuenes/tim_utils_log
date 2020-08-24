@@ -8,7 +8,7 @@ type UtilsLog struct {
 	TransHeader      TimLogTransactHeader
 	LoggingAppname   string
 	LogItemTab       []BufferedLogItem
-	ErrCase          bool
+	Exception        ExceptionStruct
 }
 
 func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
