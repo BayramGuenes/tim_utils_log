@@ -14,6 +14,7 @@ type UtilsLog struct {
 func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
 
 	lInput := InputParamStartTransact{}
+	lInput.TransName = iTransName
 	lInput.TransAppName = iAppName
 	lInput.ClientAppName = iAppName
 	lInput.NameLogServer = iNameTimLogServer
@@ -24,7 +25,7 @@ func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUN
 	lOutput := timLogger.StartLogTransaction(lInput)
 	eLog.TransHeader.TransAppName = iAppName
 	eLog.TransHeader.ClientAppName = iAppName
-	eLog.TransHeader.TransAppName = iTransName
+	eLog.TransHeader.TransName = iTransName
 	eLog.LoggingAppname = iAppName
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
@@ -37,16 +38,17 @@ func NewLoggerSvc(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNa
 	lInput := InputParamStartTransact{}
 	lInput.TransKey = iTransHeader.TransKey
 	lInput.TransAppName = iAppName
+	lInput.TransName = iTransHeader.TransName
 	lInput.ClientAppName = iAppName
 	lInput.NameLogServer = iNameTimLogServer
 	lInput.PortLogServer = iPortTimLogServer
 	lInput.ServiceName = iServiceName
 	lInput.UName = iUName
-	lInput.TransName = iTransHeader.TransName
 
 	lOutput := timLogger.StartLogService(lInput)
 	eLog.TransHeader.TransAppName = iAppName
 	eLog.TransHeader.ClientAppName = iAppName
+	eLog.TransHeader.TransName = lInput.TransName
 	eLog.LoggingAppname = iAppName
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
