@@ -111,7 +111,17 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	return eException
 }
 
-func (ulog *UtilsLog) LogEndOK() (eException ExceptionStruct) {
+func (ulog *UtilsLog) LogEndTransactOK() (eException ExceptionStruct) {
+	eException = ExceptionStruct{}
+
+	lInputFinishTr := InputParamFinishTransact{}
+	lInputFinishTr.LogTransHeader = ulog.TransHeader
+	lInputFinishTr.Status = CoTransStatusFinishedOk
+	eException = timLogger.FinishLogTransaction(lInputFinishTr)
+	ulog = &UtilsLog{}
+	return eException
+}
+func (ulog *UtilsLog) LogEndServiceOK() (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 
 	lInputFinishTr := InputParamFinishTransact{}

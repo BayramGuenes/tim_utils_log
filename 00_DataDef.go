@@ -62,7 +62,8 @@ type InputParamLogStep struct {
 	LogTransHeader TimLogTransactHeader
 	StepName       string
 	Context        string
-	ErrCase        bool
+	AppLogging     string
+	AppSVName      string
 }
 
 type InputParamLogStepResult struct {
@@ -70,7 +71,8 @@ type InputParamLogStepResult struct {
 	StepName       string
 	StepResult     string
 	Context        string
-	ErrCase        bool
+	AppLogging     string
+	AppSVName      string
 }
 
 type InputParamFinishTransact struct {

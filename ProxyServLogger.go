@@ -141,6 +141,30 @@ func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact
 	return
 }
 
+func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishTransact) (eException ExceptionStruct) {
+	eException = ExceptionStruct{}
+	println("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	lData, err := json.Marshal(iInput)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = err.Error()
+		return
+	}
+	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/FinishLogService", lData)
+	if lExcep.Occured {
+		eException.Occured = true
+		eException.ErrTxt = "FinishLogTransaction SendPostMessage to tim_serv_logger:" + err.Error()
+		return
+	}
+	err = json.Unmarshal(lResultArrByte, &eException)
+	if err != nil {
+		eException.Occured = true
+		eException.ErrTxt = "json.Unmarshall.lResultArrByte:" + err.Error()
+		return
+	}
+	return
+}
+
 func (lcp LoggerClassProxy) LogEndFailedInFileSys(iInput InputParamFailedToFilesys) (eException ExceptionStruct) {
 	lData, err := json.Marshal(iInput)
 	if err != nil {
