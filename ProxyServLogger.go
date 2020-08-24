@@ -141,7 +141,7 @@ func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact
 	return
 }
 
-func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishTransact) (eException ExceptionStruct) {
+func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishService) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
 	println("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 	lData, err := json.Marshal(iInput)
