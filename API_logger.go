@@ -98,7 +98,7 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	lInputLogStepRes.StepName = iStepName
 	lInputLogStepRes.Context = iContext
 	lInputLogStepRes.StepResult = CoResultTypeErr
-	lInputLogStepRes.ErrCase = true
+	//lInputLogStepRes.ErrCase = true
 	eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	logItemCache := BufferedLogItem{
 		ItemType:    "result",
