@@ -141,6 +141,7 @@ func (ulog *UtilsLog) CloseLoggerSvcStatOK() (eException ExceptionStruct) {
 
 	lInputFinishTr := InputParamFinishTransact{}
 	lInputFinishTr.LogTransHeader = ulog.TransHeader
+	lInputFinishTr.AppLogging = ulog.LoggingAppname
 	lInputFinishTr.Status = CoTransStatusFinishedOk
 	eException = timLogger.FinishLogService(lInputFinishTr)
 	ulog = &UtilsLog{}
@@ -163,6 +164,7 @@ func (ulog *UtilsLog) CloseLoggerSvcStatFailed() (eException ExceptionStruct) {
 	lInputFinishTr.LogTransHeader = ulog.TransHeader
 	lInputFinishTr.Status = CoTransStatusFinishedFailed
 	lInputFinishTr.ErrCase = true
+	lInputFinishTr.AppLogging = ulog.LoggingAppname
 	eException = timLogger.FinishLogService(lInputFinishTr)
 	eException = ulog.LogEndFailedInFileSys()
 	ulog = &UtilsLog{}

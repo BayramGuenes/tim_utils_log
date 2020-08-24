@@ -79,6 +79,7 @@ type InputParamLogStepResult struct {
 
 type InputParamFinishTransact struct {
 	LogTransHeader TimLogTransactHeader
+	AppLogging     string
 	Status         string
 	ErrCase        bool
 }
