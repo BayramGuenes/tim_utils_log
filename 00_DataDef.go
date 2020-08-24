@@ -10,10 +10,10 @@ type ExceptionStruct struct {
 	ErrTxt  string
 }
 
-/*type TimLogTransactPath struct {
-	TransAppname string
-	TransName    string
-}*/
+type TimLogTransactPath struct {
+	TransActApp  string
+	TransActName string
+}
 type TimLogTransactHeader struct {
 	TransKey      string
 	TransName     string
@@ -52,19 +52,7 @@ type InputParamStartTransact struct {
 	UName               string
 	LogServerServiceAdr TimLoggerMicroservicesStruct
 }
-type InputParamCheckDisableLogMedia struct {
-	LogServerServiceAdr TimLoggerMicroservicesStruct
-	ErrCase             bool
-}
-type OutputParamDoTrace struct {
-	DoTrace   bool
-	Exception ExceptionStruct
-}
-type OutputParamDisableLogMedia struct {
-	DisableFilesys bool
-	DisableDB      bool
-	Exception      ExceptionStruct
-}
+
 type OutputParamStartTransact struct {
 	LogTrans  TimLogTransactHeader
 	Exception ExceptionStruct
@@ -106,7 +94,6 @@ type InputParamFailedToFilesys struct {
 }
 
 type TimExecLogging interface {
-	CheckDoTraceTransaction(iInput InputParamStartTransact) (eOutput OutputParamDoTrace)
 	StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact)
 	LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct)
 	LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct)
@@ -116,3 +103,18 @@ type TimExecLogging interface {
 type LoggerClassProxy struct {
 }
 type LoggerServerClass struct{}
+
+/*type InputParamCheckDisableLogMedia struct {
+	LogServerServiceAdr TimLoggerMicroservicesStruct
+	ErrCase             bool
+}
+type OutputParamDoTrace struct {
+	DoTrace   bool
+	Exception ExceptionStruct
+}
+type OutputParamDisableLogMedia struct {
+	DisableFilesys bool
+	DisableDB      bool
+	Exception      ExceptionStruct
+}
+*/
