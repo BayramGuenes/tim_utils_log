@@ -36,11 +36,11 @@ func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUN
 	return
 }
 
-func NewLoggerSvc(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
+func NewLoggerSvc(iTranskey string, iTransname string, iAppName, iServiceName, iNameTimLogServer, iPortTimLogServer, iUName string) (eLog UtilsLog) {
 	lInput := InputParamStartTransact{}
-	lInput.TransKey = iTransHeader.TransKey
+	lInput.TransKey = iTranskey
 	lInput.TransAppName = iAppName
-	lInput.TransName = iTransHeader.TransName
+	lInput.TransName = iTransname
 	lInput.ClientAppName = iAppName
 	lInput.NameLogServer = iNameTimLogServer
 	lInput.PortLogServer = iPortTimLogServer
