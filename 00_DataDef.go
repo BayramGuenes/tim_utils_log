@@ -44,13 +44,14 @@ const (
 )
 
 type InputParamStartTransact struct {
-	TransKey            string
-	TransName           string
-	ServiceName         string
-	TransAppName        string
-	ClientAppName       string
-	UName               string
-	LogServerServiceAdr TimLoggerMicroservicesStruct
+	TransKey      string
+	TransName     string
+	ServiceName   string
+	TransAppName  string
+	ClientAppName string
+	UName         string
+	NameLogServer string
+	PortLogServer string
 }
 
 type OutputParamStartTransact struct {

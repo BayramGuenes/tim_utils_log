@@ -14,8 +14,8 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 	eOutput.LogTrans.ClientAppName = iInput.ClientAppName
 	eOutput.LogTrans.TransName = iInput.TransName
 	eOutput.LogTrans.UName = iInput.UName
-	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
-	LogServer.PortLogServer = iInput.LogServerServiceAdr.PortLogServer
+	LogServer.NameLogServer = iInput.NameLogServer
+	LogServer.PortLogServer = iInput.PortLogServer
 	println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
@@ -44,8 +44,8 @@ func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOu
 	eOutput.LogTrans.ClientAppName = iInput.ClientAppName
 	eOutput.LogTrans.TransName = iInput.TransName
 	eOutput.LogTrans.UName = iInput.UName
-	LogServer.NameLogServer = iInput.LogServerServiceAdr.NameLogServer
-	LogServer.PortLogServer = iInput.LogServerServiceAdr.PortLogServer
+	LogServer.NameLogServer = iInput.NameLogServer
+	LogServer.PortLogServer = iInput.PortLogServer
 	println("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {

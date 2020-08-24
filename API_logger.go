@@ -16,8 +16,8 @@ func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUN
 	lInput := InputParamStartTransact{}
 	lInput.TransAppName = iAppName
 	lInput.ClientAppName = iAppName
-	lInput.LogServerServiceAdr.NameLogServer = iNameTimLogServer
-	lInput.LogServerServiceAdr.PortLogServer = iPortTimLogServer
+	lInput.NameLogServer = iNameTimLogServer
+	lInput.PortLogServer = iPortTimLogServer
 	lInput.UName = iUName
 	lInput.ServiceName = iTransName
 
@@ -38,8 +38,8 @@ func NewLoggerSvc(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNa
 	lInput.TransKey = iTransHeader.TransKey
 	lInput.TransAppName = iAppName
 	lInput.ClientAppName = iAppName
-	lInput.LogServerServiceAdr.NameLogServer = iNameTimLogServer
-	lInput.LogServerServiceAdr.PortLogServer = iPortTimLogServer
+	lInput.NameLogServer = iNameTimLogServer
+	lInput.PortLogServer = iPortTimLogServer
 	lInput.ServiceName = iServiceName
 	lInput.UName = iUName
 	lInput.TransName = iTransHeader.TransName
