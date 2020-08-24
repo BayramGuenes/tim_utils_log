@@ -7,6 +7,7 @@ type UtilsLog struct {
 	PortTimLogServer string
 	TransHeader      TimLogTransactHeader
 	LoggingAppname   string
+	ServiceName      string
 	LogItemTab       []BufferedLogItem
 	Exception        ExceptionStruct
 }
@@ -29,6 +30,7 @@ func NewLoggerTr(iAppName, iTransName, iNameTimLogServer, iPortTimLogServer, iUN
 	eLog.LoggingAppname = iAppName
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
+	eLog.ServiceName = iTransName
 	eLog.TransHeader.UName = iUName
 	eLog.TransHeader.TransKey = lOutput.LogTrans.TransKey
 	return
@@ -52,6 +54,7 @@ func NewLoggerSvc(iTransHeader TimLogTransactHeader, iAppName, iServiceName, iNa
 	eLog.LoggingAppname = iAppName
 	eLog.NameTimLogServer = iNameTimLogServer
 	eLog.PortTimLogServer = iPortTimLogServer
+	eLog.ServiceName = iServiceName
 	eLog.TransHeader.UName = iUName
 	eLog.TransHeader.TransKey = lOutput.LogTrans.TransKey
 	return
@@ -65,6 +68,8 @@ func (ulog *UtilsLog) LogStep(iStepName string, iContext string) (eException Exc
 	lInputLogStep.LogTransHeader = ulog.TransHeader
 	lInputLogStep.Context = iContext
 	lInputLogStep.AppLogging = ulog.LoggingAppname
+	lInputLogStep.AppSVName = ulog.ServiceName
+
 	eException = timLogger.LogTransStep(lInputLogStep)
 	logItemCache := BufferedLogItem{
 		ItemType:    "step",
@@ -85,6 +90,7 @@ func (ulog *UtilsLog) LogStepExecOK(iStepName string, iContext string) (eExcepti
 	lInputLogStepRes.Context = iContext
 	lInputLogStepRes.StepResult = CoResultTypeOk
 	lInputLogStepRes.AppLogging = ulog.LoggingAppname
+	lInputLogStepRes.AppSVName = ulog.ServiceName
 
 	eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	logItemCache := BufferedLogItem{
@@ -104,6 +110,7 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	lInputLogStepRes.Context = iContext
 	lInputLogStepRes.StepResult = CoResultTypeErr
 	lInputLogStepRes.AppLogging = ulog.LoggingAppname
+	lInputLogStepRes.AppSVName = ulog.ServiceName
 
 	//lInputLogStepRes.ErrCase = true
 	eException = timLogger.LogTransStepResult(lInputLogStepRes)
