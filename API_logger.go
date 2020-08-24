@@ -64,6 +64,7 @@ func (ulog *UtilsLog) LogStep(iStepName string, iContext string) (eException Exc
 	lInputLogStep.StepName = iStepName
 	lInputLogStep.LogTransHeader = ulog.TransHeader
 	lInputLogStep.Context = iContext
+	lInputLogStep.AppLogging = ulog.LoggingAppname
 	eException = timLogger.LogTransStep(lInputLogStep)
 	logItemCache := BufferedLogItem{
 		ItemType:    "step",
@@ -83,6 +84,8 @@ func (ulog *UtilsLog) LogStepExecOK(iStepName string, iContext string) (eExcepti
 	lInputLogStepRes.StepName = iStepName
 	lInputLogStepRes.Context = iContext
 	lInputLogStepRes.StepResult = CoResultTypeOk
+	lInputLogStepRes.AppLogging = ulog.LoggingAppname
+
 	eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	logItemCache := BufferedLogItem{
 		ItemType:    "result",
@@ -100,6 +103,8 @@ func (ulog *UtilsLog) LogStepExecErr(iStepName string, iContext string) (eExcept
 	lInputLogStepRes.StepName = iStepName
 	lInputLogStepRes.Context = iContext
 	lInputLogStepRes.StepResult = CoResultTypeErr
+	lInputLogStepRes.AppLogging = ulog.LoggingAppname
+
 	//lInputLogStepRes.ErrCase = true
 	eException = timLogger.LogTransStepResult(lInputLogStepRes)
 	logItemCache := BufferedLogItem{
