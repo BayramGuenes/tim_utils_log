@@ -2,6 +2,7 @@ package tim_utils_log
 
 import (
 	"encoding/json"
+	"log"
 
 	timHTTP "github.com/BayramGuenes/tim_utils_http"
 )
@@ -16,14 +17,14 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 	eOutput.LogTrans.UName = iInput.UName
 	LogServer.NameLogServer = iInput.NameLogServer
 	LogServer.PortLogServer = iInput.PortLogServer
-	println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	log.Println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eOutput.Exception.Occured = true
 		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
 		return
 	}
-	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	//log.Println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
 	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartTransaction", lData)
 	if lExcep.Occured {
 		eOutput.Exception.Occured = true
@@ -46,14 +47,14 @@ func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOu
 	eOutput.LogTrans.UName = iInput.UName
 	LogServer.NameLogServer = iInput.NameLogServer
 	LogServer.PortLogServer = iInput.PortLogServer
-	println("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	log.Println("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eOutput.Exception.Occured = true
 		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
 		return
 	}
-	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	//log.Println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
 	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/StartService", lData)
 	if lExcep.Occured {
 		eOutput.Exception.Occured = true
@@ -71,7 +72,7 @@ func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOu
 
 func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println(iInput.StepName + ":" + iInput.Context)
+	log.Println(iInput.StepName + ":" + iInput.Context)
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -95,7 +96,7 @@ func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException E
 
 func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println(iInput.StepName + ":" + iInput.StepResult)
+	log.Println(iInput.StepName + ":" + iInput.StepResult)
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -119,7 +120,7 @@ func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (
 
 func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	log.Println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -143,7 +144,7 @@ func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact
 
 func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishService) (eException ExceptionStruct) {
 	eException = ExceptionStruct{}
-	println("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	log.Println("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -198,7 +199,7 @@ func (lcp LoggerClassProxy) LogEndFailedInFileSys(iInput InputParamFailedToFiles
 		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
 		return
 	}
-	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	//log.log.Println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
 	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/CheckDoTraceTransaction", lData)
 	if lExcep.Occured {
 		eOutput.Exception.Occured = true
@@ -224,7 +225,7 @@ func (lcp LoggerClassProxy) CheckDisableLogMedia(iInput InputParamCheckDisableLo
 		eOutput.Exception.ErrTxt = "json.Marshall.Input:" + err.Error()
 		return
 	}
-	//println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
+	//log.Println("LogServer.NameLogServer, LogServer.PortLogServer:"+LogServer.NameLogServer, LogServer.PortLogServer)
 	lResultArrByte, _, _, lExcep := timHTTP.SendPostMsg(LogServer.NameLogServer, LogServer.PortLogServer, "/CheckDisableLogMedia", lData)
 	if lExcep.Occured {
 		eOutput.Exception.Occured = true
