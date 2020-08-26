@@ -2,7 +2,6 @@ package tim_utils_log
 
 import (
 	"encoding/json"
-	"log"
 
 	timHTTP "github.com/BayramGuenes/tim_utils_http"
 )
@@ -10,8 +9,6 @@ import (
 var LogServer TimLoggerMicroservicesStruct
 
 func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 	eOutput = OutputParamStartTransact{}
 	eOutput.LogTrans.TransAppName = iInput.TransAppName
 	eOutput.LogTrans.ClientAppName = iInput.ClientAppName
@@ -19,7 +16,7 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 	eOutput.LogTrans.UName = iInput.UName
 	LogServer.NameLogServer = iInput.NameLogServer
 	LogServer.PortLogServer = iInput.PortLogServer
-	log.Println("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	StdOut("Start Transaction " + iInput.TransName + " {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eOutput.Exception.Occured = true
@@ -42,8 +39,6 @@ func (lcp LoggerClassProxy) StartLogTransaction(iInput InputParamStartTransact) 
 	return
 }
 func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOutput OutputParamStartTransact) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	eOutput = OutputParamStartTransact{}
 	eOutput.LogTrans.TransAppName = iInput.TransAppName
@@ -52,7 +47,7 @@ func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOu
 	eOutput.LogTrans.UName = iInput.UName
 	LogServer.NameLogServer = iInput.NameLogServer
 	LogServer.PortLogServer = iInput.PortLogServer
-	log.Println("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
+	StdOut("Start Service  {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eOutput.Exception.Occured = true
@@ -76,11 +71,9 @@ func (lcp LoggerClassProxy) StartLogService(iInput InputParamStartTransact) (eOu
 }
 
 func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException ExceptionStruct) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	eException = ExceptionStruct{}
-	log.Println(iInput.StepName + ":" + iInput.Context)
+	StdOut(iInput.StepName + ":" + iInput.Context)
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -103,11 +96,9 @@ func (lcp LoggerClassProxy) LogTransStep(iInput InputParamLogStep) (eException E
 }
 
 func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (eException ExceptionStruct) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	eException = ExceptionStruct{}
-	log.Println(iInput.StepName + ":" + iInput.StepResult)
+	StdOut(iInput.StepName + ":" + iInput.StepResult)
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -130,11 +121,9 @@ func (lcp LoggerClassProxy) LogTransStepResult(iInput InputParamLogStepResult) (
 }
 
 func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact) (eException ExceptionStruct) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	eException = ExceptionStruct{}
-	log.Println("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	StdOut("End Transaction  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -157,11 +146,9 @@ func (lcp LoggerClassProxy) FinishLogTransaction(iInput InputParamFinishTransact
 }
 
 func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishService) (eException ExceptionStruct) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	eException = ExceptionStruct{}
-	log.Println("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
+	StdOut("End Service  }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} ")
 	lData, err := json.Marshal(iInput)
 	if err != nil {
 		eException.Occured = true
@@ -184,8 +171,6 @@ func (lcp LoggerClassProxy) FinishLogService(iInput InputParamFinishService) (eE
 }
 
 func (lcp LoggerClassProxy) LogEndFailedInFileSys(iInput InputParamFailedToFilesys) (eException ExceptionStruct) {
-	log.SetFlags(0)
-	log.SetOutput(new(logWriter))
 
 	lData, err := json.Marshal(iInput)
 	if err != nil {
